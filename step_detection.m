@@ -33,74 +33,89 @@ filtered_gyro_data_diff = diff(filtered_gyro_data);
 
 %% plot the filtered data and its derivative
 % Define the variable
-n_samples = 325610;
+%n_samples = 325610;
 
 % Accelerometer data
+begin = 13660;
+end_sample = 42516;
+
 figure;
-subplot(3,3,1);
-plot(filtered_accel_data(1:n_samples, 1), filtered_accel_data_diff(1:n_samples, 1),'r');
+subplot(3,2,1);
+plot(filtered_accel_data(begin:end_sample, 1), filtered_accel_data_diff(begin:end_sample, 1),'r');
 xlabel('X-axis Accel');
 ylabel('X-axis Accel Derivative');
+grid on;
 
-subplot(3,3,2);
-plot(filtered_accel_data(1:n_samples, 2), filtered_accel_data_diff(1:n_samples, 2),'g');
+subplot(3,2,2);
+plot(filtered_accel_data(begin:end_sample, 2), filtered_accel_data_diff(begin:end_sample, 2),'g');
 xlabel('Y-axis Accel');
 ylabel('Y-axis Accel Derivative');
+grid on;
 
-subplot(3,3,3);
-plot(filtered_accel_data(1:n_samples, 3), filtered_accel_data_diff(1:n_samples, 3),'b');
+subplot(3,2,3);
+plot(filtered_accel_data(begin:end_sample, 3), filtered_accel_data_diff(begin:end_sample, 3),'b');
 xlabel('Z-axis Accel');
 ylabel('Z-axis Accel Derivative');
+grid on;
 
-subplot(3,3,4);
-plot(filtered_accel_data(1:n_samples, 1), filtered_accel_data_diff(1:n_samples, 2),'r');
+subplot(3,2,4);
+plot(filtered_accel_data(begin:end_sample, 1), filtered_accel_data_diff(begin:end_sample, 2),'r');
 xlabel('X-axis Accel');
 ylabel('Y-axis Accel Derivative');
+grid on;
 
-subplot(3,3,5);
-plot(filtered_accel_data(1:n_samples, 2), filtered_accel_data_diff(1:n_samples, 3),'g');
+subplot(3,2,5);
+plot(filtered_accel_data(begin:end_sample, 2), filtered_accel_data_diff(begin:end_sample, 3),'g');
 xlabel('Y-axis Accel');
 ylabel('Z-axis Accel Derivative');
+grid on;
 
-subplot(3,3,6);
-plot(filtered_accel_data(1:n_samples, 3), filtered_accel_data_diff(1:n_samples, 2),'b');
+subplot(3,2,6);
+plot(filtered_accel_data(begin:end_sample, 3), filtered_accel_data_diff(begin:end_sample, 2),'b');
 xlabel('Z-axis Accel');
 ylabel('Y-axis Accel Derivative');
+grid on;
 
 % Gyroscope data
 figure;
-subplot(3,3,1);
-plot(filtered_gyro_data(1:n_samples, 1), filtered_gyro_data_diff(1:n_samples, 1),'r');
+subplot(3,2,1);
+plot(filtered_gyro_data(begin:end_sample, 1), filtered_gyro_data_diff(begin:end_sample, 1),'r');
 xlabel('X-axis Gyro');
 ylabel('X-axis Gyro Derivative');
+grid on;
 
-subplot(3,3,2);
-plot(filtered_gyro_data(1:n_samples, 2), filtered_gyro_data_diff(1:n_samples, 2),'g');
+subplot(3,2,2);
+plot(filtered_gyro_data(begin:end_sample, 2), filtered_gyro_data_diff(begin:end_sample, 2),'g');
 xlabel('Y-axis Gyro');
 ylabel('Y-axis Gyro Derivative');
+grid on;
 
-subplot(3,3,3);
-plot(filtered_gyro_data(1:n_samples, 3), filtered_gyro_data_diff(1:n_samples, 3),'b');
+subplot(3,2,3);
+plot(filtered_gyro_data(begin:end_sample, 3), filtered_gyro_data_diff(begin:end_sample, 3),'b');
 xlabel('Z-axis Gyro');
 ylabel('Z-axis Gyro Derivative');
+grid on;
 
-subplot(3,3,4);
-plot(filtered_gyro_data(1:n_samples, 1), filtered_gyro_data_diff(1:n_samples, 2),'r');
+subplot(3,2,4);
+plot(filtered_gyro_data(begin:end_sample, 1), filtered_gyro_data_diff(begin:end_sample, 2),'r');
 xlabel('X-axis Gyro');
 ylabel('Y-axis Gyro Derivative');
+grid on;
 
-subplot(3,3,5);
-plot(filtered_gyro_data(1:n_samples, 2), filtered_gyro_data_diff(1:n_samples, 3),'g');
+subplot(3,2,5);
+plot(filtered_gyro_data(begin:end_sample, 2), filtered_gyro_data_diff(begin:end_sample, 3),'g');
 xlabel('Y-axis Gyro');
 ylabel('Z-axis Gyro Derivative');
+grid on;
 
-subplot(3,3,6);
-plot(filtered_gyro_data(1:n_samples, 3), filtered_gyro_data_diff(1:n_samples, 1),'b');
+subplot(3,2,6);
+plot(filtered_gyro_data(begin:end_sample, 3), filtered_gyro_data_diff(begin:end_sample, 1),'b');
 xlabel('Z-axis Gyro');
 ylabel('X-axis Gyro Derivative');
+grid on;
 
 %% Get the angle traced by the accelerometer
-angle_accel = atan2d(filtered_accel_data(1:end-1, 3), filtered_accel_data_diff(:, 3));
+angle_accel = atan2d(filtered_accel_data(1:end-1, 1) + filtered_accel_data(1:end-1, 3) , filtered_accel_data_diff(:, 1) + filtered_accel_data_diff(:, 3));
 
 %% Now consider the points where the angle just crossed 100 degrees from below to be a step
 
@@ -120,6 +135,7 @@ plot(filtered_accel_data(:, 3), 'b');
 xlabel('Sample Number');
 ylabel('X-axis Accel');
 title('Accelerometer X-axis Data');
+grid on;
 
 % Subplot for Angle and Step Crossings
 subplot(2, 1, 2);
@@ -131,4 +147,5 @@ ylabel('Angle (degrees)');
 title('Step Detection using Angle Crossings');
 legend('Angle', 'Step Crossings');
 hold off;
+grid on;
 
